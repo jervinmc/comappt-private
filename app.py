@@ -7,6 +7,7 @@ from Database import Database
 import boto3
 import jwt
 import os
+from decouple import config
 now = datetime.now().date()
 app=Flask(__name__)
 CORS(app)
@@ -88,7 +89,7 @@ class UploadTest(Resource):
         file = request.files['file']
         file_path=os.path.join('', file.filename) # path where file can be saved
         file.save(file_path)
-        client = boto3.client('s3',aws_access_key_id="AKIAZHMLQ7TWO7VFMBQA",aws_secret_access_key="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")
+        client = boto3.client('s3',aws_access_key_id=config("AWS_ACCESS_ID"),aws_secret_access_key=config("AWS_SECRET_ID"))
         client.upload_file(f'{file.filename}','comapptpublic',f'{file.filename}')
         return {"filename":f"https://comapptpublic.s3.us-east-2.amazonaws.com/{file.filename}"}
 
