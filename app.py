@@ -90,8 +90,8 @@ class UploadTest(Resource):
         file_path=os.path.join('', file.filename) # path where file can be saved
         file.save(file_path)
         client = boto3.client('s3',aws_access_key_id=config("AWS_ACCESS_ID"),aws_secret_access_key=config("AWS_SECRET_ID"))
-        client.upload_file(f'{file.filename}','comapptpublic',f'{file.filename}')
-        return {"filename":f"https://comapptpublic.s3.us-east-2.amazonaws.com/{file.filename}"}
+        client.upload_file(f'{file.filename}','comappt',f'{file.filename}')
+        return {"filename":f"https://comappt.s3.amazonaws.com/{file.filename}"}
 
 
 class Verification(Resource):
@@ -104,4 +104,4 @@ api.add_resource(Usermanagement,'/api/v1/users/<int:pk>')
 api.add_resource(Login,'/api/v1/login')
 api.add_resource(UploadTest,'/api/v1/uploadtest')
 if __name__ == "__main__":
-    app.run(debug=True,host='0.0.0.0')
+    app.run(debug=True,host='0.0.0.0',port="5000")
